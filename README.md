@@ -1,6 +1,6 @@
-# Syntecxhub Backend Development Internship
+# Syntecxhub Backend Development Project
 
-A complete REST API backend built with **Node.js**, **Express**, and **MongoDB** as part of the Syntecxhub Backend Development Internship program.
+A complete REST API backend built with **Node.js**, **Express**, and **MongoDB** as part of the Syntecxhub Backend Development Project
 
 ---
 
