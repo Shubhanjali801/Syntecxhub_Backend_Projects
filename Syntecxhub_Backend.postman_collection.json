@@ -1,0 +1,848 @@
+{
+  "info": {
+    "name": "Syntecxhub Backend Projects",
+    "description": "All 9 projects - Task 1, 2 & 3",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "BASE_URL", "value": "http://localhost:5000" },
+    { "key": "TOKEN", "value": "" },
+    { "key": "USER_ID", "value": "" },
+    { "key": "PRODUCT_ID", "value": "" },
+    { "key": "FILE_ID", "value": "" },
+    { "key": "POST_ID", "value": "" },
+    { "key": "NOTE_ID", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "TASK 1 - CRUD APIs",
+      "item": [
+        {
+          "name": "PROJECT 1 - User CRUD",
+          "item": [
+            {
+              "name": "Create User",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();",
+                      "if (res.data && res.data._id) {",
+                      "  pm.collectionVariables.set('USER_ID', res.data._id);",
+                      "  console.log('USER_ID saved:', res.data._id);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Shubhanjali Sharma\",\n  \"email\": \"shubhanjali@example.com\",\n  \"age\": 21\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/users", "host": ["{{BASE_URL}}"], "path": ["users"] }
+              }
+            },
+            {
+              "name": "Create User 2",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Riya Verma\",\n  \"email\": \"riya.verma@example.com\",\n  \"age\": 23\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/users", "host": ["{{BASE_URL}}"], "path": ["users"] }
+              }
+            },
+            {
+              "name": "Create User - Missing Email (400)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"No Email User\"\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/users", "host": ["{{BASE_URL}}"], "path": ["users"] }
+              }
+            },
+            {
+              "name": "Get All Users",
+              "request": {
+                "method": "GET",
+                "url": { "raw": "{{BASE_URL}}/users", "host": ["{{BASE_URL}}"], "path": ["users"] }
+              }
+            },
+            {
+              "name": "Get User by ID",
+              "request": {
+                "method": "GET",
+                "url": { "raw": "{{BASE_URL}}/users/{{USER_ID}}", "host": ["{{BASE_URL}}"], "path": ["users", "{{USER_ID}}"] }
+              }
+            },
+            {
+              "name": "Update User",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Shubhanjali Sharma Updated\",\n  \"age\": 22\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/users/{{USER_ID}}", "host": ["{{BASE_URL}}"], "path": ["users", "{{USER_ID}}"] }
+              }
+            },
+            {
+              "name": "Delete User",
+              "request": {
+                "method": "DELETE",
+                "url": { "raw": "{{BASE_URL}}/users/{{USER_ID}}", "host": ["{{BASE_URL}}"], "path": ["users", "{{USER_ID}}"] }
+              }
+            },
+            {
+              "name": "Get User - Not Found (404)",
+              "request": {
+                "method": "GET",
+                "url": { "raw": "{{BASE_URL}}/users/000000000000000000000000", "host": ["{{BASE_URL}}"], "path": ["users", "000000000000000000000000"] }
+              }
+            }
+          ]
+        },
+        {
+          "name": "PROJECT 2 - Product CRUD",
+          "item": [
+            {
+              "name": "Create Product - Laptop",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();",
+                      "if (res.data && res.data._id) {",
+                      "  pm.collectionVariables.set('PRODUCT_ID', res.data._id);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Dell XPS 15\",\n  \"price\": 85000,\n  \"description\": \"High-performance laptop with Intel i7 processor\",\n  \"category\": \"electronics\"\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/products", "host": ["{{BASE_URL}}"], "path": ["products"] }
+              }
+            },
+            {
+              "name": "Create Product - Phone",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Samsung Galaxy S24\",\n  \"price\": 74999,\n  \"description\": \"Latest Samsung flagship smartphone\",\n  \"category\": \"electronics\"\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/products", "host": ["{{BASE_URL}}"], "path": ["products"] }
+              }
+            },
+            {
+              "name": "Create Product - Shirt",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Cotton Round Neck T-Shirt\",\n  \"price\": 499,\n  \"description\": \"Comfortable everyday wear\",\n  \"category\": \"clothing\"\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/products", "host": ["{{BASE_URL}}"], "path": ["products"] }
+              }
+            },
+            {
+              "name": "Create Product - Book",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Clean Code by Robert Martin\",\n  \"price\": 850,\n  \"description\": \"A handbook of agile software craftsmanship\",\n  \"category\": \"books\"\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/products", "host": ["{{BASE_URL}}"], "path": ["products"] }
+              }
+            },
+            {
+              "name": "Get All Products",
+              "request": {
+                "method": "GET",
+                "url": { "raw": "{{BASE_URL}}/products", "host": ["{{BASE_URL}}"], "path": ["products"] }
+              }
+            },
+            {
+              "name": "Filter by Category",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{BASE_URL}}/products?category=electronics",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["products"],
+                  "query": [{ "key": "category", "value": "electronics" }]
+                }
+              }
+            },
+            {
+              "name": "Filter by Price Range",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{BASE_URL}}/products?minPrice=500&maxPrice=80000",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["products"],
+                  "query": [
+                    { "key": "minPrice", "value": "500" },
+                    { "key": "maxPrice", "value": "80000" }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Pagination - Page 1",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{BASE_URL}}/products?page=1&limit=2",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["products"],
+                  "query": [
+                    { "key": "page", "value": "1" },
+                    { "key": "limit", "value": "2" }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Product by ID",
+              "request": {
+                "method": "GET",
+                "url": { "raw": "{{BASE_URL}}/products/{{PRODUCT_ID}}", "host": ["{{BASE_URL}}"], "path": ["products", "{{PRODUCT_ID}}"] }
+              }
+            },
+            {
+              "name": "Update Product",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"price\": 79999,\n  \"description\": \"Updated: High-performance laptop with Intel i9 processor\"\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/products/{{PRODUCT_ID}}", "host": ["{{BASE_URL}}"], "path": ["products", "{{PRODUCT_ID}}"] }
+              }
+            },
+            {
+              "name": "Delete Product",
+              "request": {
+                "method": "DELETE",
+                "url": { "raw": "{{BASE_URL}}/products/{{PRODUCT_ID}}", "host": ["{{BASE_URL}}"], "path": ["products", "{{PRODUCT_ID}}"] }
+              }
+            }
+          ]
+        },
+        {
+          "name": "PROJECT 3 - File Upload",
+          "item": [
+            {
+              "name": "Upload Image",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();",
+                      "if (res.data && res.data._id) {",
+                      "  pm.collectionVariables.set('FILE_ID', res.data._id);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": [],
+                      "description": "Select any image from your PC (jpg/png/gif, max 5MB)"
+                    }
+                  ]
+                },
+                "url": { "raw": "{{BASE_URL}}/upload", "host": ["{{BASE_URL}}"], "path": ["upload"] }
+              }
+            },
+            {
+              "name": "Get File Metadata by ID",
+              "request": {
+                "method": "GET",
+                "url": { "raw": "{{BASE_URL}}/upload/{{FILE_ID}}", "host": ["{{BASE_URL}}"], "path": ["upload", "{{FILE_ID}}"] }
+              }
+            },
+            {
+              "name": "Delete File",
+              "request": {
+                "method": "DELETE",
+                "url": { "raw": "{{BASE_URL}}/upload/{{FILE_ID}}", "host": ["{{BASE_URL}}"], "path": ["upload", "{{FILE_ID}}"] }
+              }
+            },
+            {
+              "name": "Upload Non-Image - Should Fail (400)",
+              "request": {
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": [],
+                      "description": "Try uploading a .pdf or .txt file - should be rejected"
+                    }
+                  ]
+                },
+                "url": { "raw": "{{BASE_URL}}/upload", "host": ["{{BASE_URL}}"], "path": ["upload"] }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TASK 2 - Auth + Blog + Profile Upload",
+      "item": [
+        {
+          "name": "PROJECT 1 - User Authentication",
+          "item": [
+            {
+              "name": "Signup",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();",
+                      "if (res.data && res.data.id) {",
+                      "  pm.collectionVariables.set('USER_ID', res.data.id);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Shubhanjali Sharma\",\n  \"email\": \"shubhanjali@example.com\",\n  \"password\": \"password123\"\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/auth/signup", "host": ["{{BASE_URL}}"], "path": ["auth", "signup"] }
+              }
+            },
+            {
+              "name": "Login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();",
+                      "if (res.token) {",
+                      "  pm.collectionVariables.set('TOKEN', res.token);",
+                      "  console.log('TOKEN saved');",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"shubhanjali@example.com\",\n  \"password\": \"password123\"\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/auth/login", "host": ["{{BASE_URL}}"], "path": ["auth", "login"] }
+              }
+            },
+            {
+              "name": "Login - Wrong Password (401)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"shubhanjali@example.com\",\n  \"password\": \"wrongpassword\"\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/auth/login", "host": ["{{BASE_URL}}"], "path": ["auth", "login"] }
+              }
+            },
+            {
+              "name": "Get Me (Protected - needs TOKEN)",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{TOKEN}}" }
+                ],
+                "url": { "raw": "{{BASE_URL}}/auth/me", "host": ["{{BASE_URL}}"], "path": ["auth", "me"] }
+              }
+            },
+            {
+              "name": "Get Me - No Token (401)",
+              "request": {
+                "method": "GET",
+                "url": { "raw": "{{BASE_URL}}/auth/me", "host": ["{{BASE_URL}}"], "path": ["auth", "me"] }
+              }
+            }
+          ]
+        },
+        {
+          "name": "PROJECT 2 - Blog API",
+          "item": [
+            {
+              "name": "Create Post - Node.js",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();",
+                      "if (res.data && res.data._id) {",
+                      "  pm.collectionVariables.set('POST_ID', res.data._id);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Getting Started with Node.js\",\n  \"body\": \"Node.js is a JavaScript runtime built on Chrome's V8 engine. It allows you to run JavaScript on the server side. In this post we will explore the basics of Node.js and build a simple REST API.\",\n  \"author\": \"Shubhanjali\",\n  \"tags\": [\"node\", \"javascript\", \"backend\"]\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/posts", "host": ["{{BASE_URL}}"], "path": ["posts"] }
+              }
+            },
+            {
+              "name": "Create Post - MongoDB",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"MongoDB Aggregation Pipeline Explained\",\n  \"body\": \"The MongoDB aggregation pipeline is a powerful framework for data transformation. Using stages like $match, $group, and $project, you can perform complex queries efficiently.\",\n  \"author\": \"Riya\",\n  \"tags\": [\"mongodb\", \"database\", \"backend\"]\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/posts", "host": ["{{BASE_URL}}"], "path": ["posts"] }
+              }
+            },
+            {
+              "name": "Create Post - React",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"React Hooks - useState and useEffect\",\n  \"body\": \"React Hooks let you use state and lifecycle features in functional components. useState manages local state while useEffect handles side effects like API calls.\",\n  \"author\": \"Shubhanjali\",\n  \"tags\": [\"react\", \"javascript\", \"frontend\"]\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/posts", "host": ["{{BASE_URL}}"], "path": ["posts"] }
+              }
+            },
+            {
+              "name": "Get All Posts",
+              "request": {
+                "method": "GET",
+                "url": { "raw": "{{BASE_URL}}/posts", "host": ["{{BASE_URL}}"], "path": ["posts"] }
+              }
+            },
+            {
+              "name": "Filter by Tag",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{BASE_URL}}/posts?tag=node",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["posts"],
+                  "query": [{ "key": "tag", "value": "node" }]
+                }
+              }
+            },
+            {
+              "name": "Filter by Author",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{BASE_URL}}/posts?author=Shubhanjali",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["posts"],
+                  "query": [{ "key": "author", "value": "Shubhanjali" }]
+                }
+              }
+            },
+            {
+              "name": "Sort - Oldest First",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{BASE_URL}}/posts?sort=oldest",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["posts"],
+                  "query": [{ "key": "sort", "value": "oldest" }]
+                }
+              }
+            },
+            {
+              "name": "Pagination - Page 1 Limit 2",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{BASE_URL}}/posts?page=1&limit=2",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["posts"],
+                  "query": [
+                    { "key": "page", "value": "1" },
+                    { "key": "limit", "value": "2" }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Get Post by ID",
+              "request": {
+                "method": "GET",
+                "url": { "raw": "{{BASE_URL}}/posts/{{POST_ID}}", "host": ["{{BASE_URL}}"], "path": ["posts", "{{POST_ID}}"] }
+              }
+            },
+            {
+              "name": "Update Post",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Getting Started with Node.js - Updated\",\n  \"tags\": [\"node\", \"javascript\", \"backend\", \"express\"]\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/posts/{{POST_ID}}", "host": ["{{BASE_URL}}"], "path": ["posts", "{{POST_ID}}"] }
+              }
+            },
+            {
+              "name": "Delete Post",
+              "request": {
+                "method": "DELETE",
+                "url": { "raw": "{{BASE_URL}}/posts/{{POST_ID}}", "host": ["{{BASE_URL}}"], "path": ["posts", "{{POST_ID}}"] }
+              }
+            }
+          ]
+        },
+        {
+          "name": "PROJECT 3 - Profile Picture Upload",
+          "item": [
+            {
+              "name": "Upload Profile Picture",
+              "request": {
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": [],
+                      "description": "Pick any image from your PC"
+                    }
+                  ]
+                },
+                "url": { "raw": "{{BASE_URL}}/users/{{USER_ID}}/upload", "host": ["{{BASE_URL}}"], "path": ["users", "{{USER_ID}}", "upload"] }
+              }
+            },
+            {
+              "name": "Get Profile Picture",
+              "request": {
+                "method": "GET",
+                "url": { "raw": "{{BASE_URL}}/users/{{USER_ID}}/picture", "host": ["{{BASE_URL}}"], "path": ["users", "{{USER_ID}}", "picture"] }
+              }
+            },
+            {
+              "name": "Delete Profile Picture",
+              "request": {
+                "method": "DELETE",
+                "url": { "raw": "{{BASE_URL}}/users/{{USER_ID}}/picture", "host": ["{{BASE_URL}}"], "path": ["users", "{{USER_ID}}", "picture"] }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TASK 3 - Notes + Analytics + Search",
+      "item": [
+        {
+          "name": "PROJECT 1 - Notes App (Protected)",
+          "item": [
+            {
+              "name": "Create Note - Work",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();",
+                      "if (res.data && res.data._id) {",
+                      "  pm.collectionVariables.set('NOTE_ID', res.data._id);",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "Authorization", "value": "Bearer {{TOKEN}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Project Deadline\",\n  \"body\": \"Submit the Syntecxhub backend project by end of week. Make sure all 9 projects are complete and pushed to GitHub.\",\n  \"category\": \"work\"\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/notes", "host": ["{{BASE_URL}}"], "path": ["notes"] }
+              }
+            },
+            {
+              "name": "Create Note - Personal",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "Authorization", "value": "Bearer {{TOKEN}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Buy Groceries\",\n  \"body\": \"Milk, bread, eggs, vegetables, and fruits for the week.\",\n  \"category\": \"personal\"\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/notes", "host": ["{{BASE_URL}}"], "path": ["notes"] }
+              }
+            },
+            {
+              "name": "Create Note - Study",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "Authorization", "value": "Bearer {{TOKEN}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"MongoDB Aggregation Notes\",\n  \"body\": \"$match filters documents. $group groups them. $project reshapes them. $sort orders the output. These are the 4 most important stages.\",\n  \"category\": \"study\"\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/notes", "host": ["{{BASE_URL}}"], "path": ["notes"] }
+              }
+            },
+            {
+              "name": "Create Note - Work 2",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "Authorization", "value": "Bearer {{TOKEN}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Team Meeting\",\n  \"body\": \"Weekly team meeting on Monday at 10am. Discuss progress and blockers for the internship tasks.\",\n  \"category\": \"work\"\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/notes", "host": ["{{BASE_URL}}"], "path": ["notes"] }
+              }
+            },
+            {
+              "name": "Get All My Notes",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+                "url": { "raw": "{{BASE_URL}}/notes", "host": ["{{BASE_URL}}"], "path": ["notes"] }
+              }
+            },
+            {
+              "name": "Get Single Note",
+              "request": {
+                "method": "GET",
+                "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+                "url": { "raw": "{{BASE_URL}}/notes/{{NOTE_ID}}", "host": ["{{BASE_URL}}"], "path": ["notes", "{{NOTE_ID}}"] }
+              }
+            },
+            {
+              "name": "Update Note",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  { "key": "Authorization", "value": "Bearer {{TOKEN}}" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Project Deadline - UPDATED\",\n  \"body\": \"Submit all 9 backend projects by Sunday. GitHub repo link must be included in the submission form.\"\n}"
+                },
+                "url": { "raw": "{{BASE_URL}}/notes/{{NOTE_ID}}", "host": ["{{BASE_URL}}"], "path": ["notes", "{{NOTE_ID}}"] }
+              }
+            },
+            {
+              "name": "Archive Note (Toggle)",
+              "request": {
+                "method": "PATCH",
+                "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+                "url": { "raw": "{{BASE_URL}}/notes/{{NOTE_ID}}/archive", "host": ["{{BASE_URL}}"], "path": ["notes", "{{NOTE_ID}}", "archive"] }
+              }
+            },
+            {
+              "name": "Soft Delete Note",
+              "request": {
+                "method": "DELETE",
+                "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+                "url": { "raw": "{{BASE_URL}}/notes/{{NOTE_ID}}", "host": ["{{BASE_URL}}"], "path": ["notes", "{{NOTE_ID}}"] }
+              }
+            },
+            {
+              "name": "Get Notes - No Token (401)",
+              "request": {
+                "method": "GET",
+                "url": { "raw": "{{BASE_URL}}/notes", "host": ["{{BASE_URL}}"], "path": ["notes"] }
+              }
+            }
+          ]
+        },
+        {
+          "name": "PROJECT 2 - Analytics API",
+          "item": [
+            {
+              "name": "Notes per Category",
+              "request": {
+                "method": "GET",
+                "url": { "raw": "{{BASE_URL}}/analytics/notes-per-category", "host": ["{{BASE_URL}}"], "path": ["analytics", "notes-per-category"] }
+              }
+            },
+            {
+              "name": "Notes per Category - Filter by User",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{BASE_URL}}/analytics/notes-per-category?userId={{USER_ID}}",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["analytics", "notes-per-category"],
+                  "query": [{ "key": "userId", "value": "{{USER_ID}}" }]
+                }
+              }
+            },
+            {
+              "name": "Posts per Month",
+              "request": {
+                "method": "GET",
+                "url": { "raw": "{{BASE_URL}}/analytics/posts-per-month", "host": ["{{BASE_URL}}"], "path": ["analytics", "posts-per-month"] }
+              }
+            },
+            {
+              "name": "Posts per Month - Date Range",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{BASE_URL}}/analytics/posts-per-month?from=2025-01-01&to=2026-12-31",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["analytics", "posts-per-month"],
+                  "query": [
+                    { "key": "from", "value": "2025-01-01" },
+                    { "key": "to", "value": "2026-12-31" }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Products by Category (Bonus)",
+              "request": {
+                "method": "GET",
+                "url": { "raw": "{{BASE_URL}}/analytics/products-by-category", "host": ["{{BASE_URL}}"], "path": ["analytics", "products-by-category"] }
+              }
+            }
+          ]
+        },
+        {
+          "name": "PROJECT 3 - Text Search API",
+          "item": [
+            {
+              "name": "Search Posts - keyword",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{BASE_URL}}/search/posts?q=Node",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["search", "posts"],
+                  "query": [{ "key": "q", "value": "Node" }]
+                }
+              }
+            },
+            {
+              "name": "Search Posts - with Tag Filter",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{BASE_URL}}/search/posts?q=javascript&tag=backend",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["search", "posts"],
+                  "query": [
+                    { "key": "q", "value": "javascript" },
+                    { "key": "tag", "value": "backend" }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Search Posts - with Author Filter",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{BASE_URL}}/search/posts?q=mongodb&author=Riya",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["search", "posts"],
+                  "query": [
+                    { "key": "q", "value": "mongodb" },
+                    { "key": "author", "value": "Riya" }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Search Notes - keyword",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{BASE_URL}}/search/notes?q=MongoDB",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["search", "notes"],
+                  "query": [{ "key": "q", "value": "MongoDB" }]
+                }
+              }
+            },
+            {
+              "name": "Search Posts - No Query (400)",
+              "request": {
+                "method": "GET",
+                "url": { "raw": "{{BASE_URL}}/search/posts", "host": ["{{BASE_URL}}"], "path": ["search", "posts"] }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
