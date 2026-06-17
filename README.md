@@ -41,8 +41,8 @@ Syntecxhub_Backend_Projects/
 │   └── File.js
 ├── middleware/
 │   ├── authMiddleware.js  # JWT verification
-│   └── upload.js          # Multer config
 ├── uploads/             # Stored uploaded images
+│   └── upload.js          # Multer config
 ├── .env                 # Environment variables
 ├── server.js            # Entry point
 └── package.json
