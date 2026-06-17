@@ -45,7 +45,9 @@ Syntecxhub_Backend_Projects/
 │   └── upload.js          # Multer config
 ├── .env                 # Environment variables
 ├── server.js            # Entry point
-└── package.json
+├──  package.json        
+├── Postman_Collection_Request&Response.json       
+└── Syntecxhub_Backend.postman_collection.json
 ```
 
 ---
